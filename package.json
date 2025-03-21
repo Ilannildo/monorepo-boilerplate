@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "solarapp",
   "private": true,
   "scripts": {
     "build": "turbo run build",
