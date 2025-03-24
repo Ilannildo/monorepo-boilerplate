@@ -1,17 +1,17 @@
 {
-  "name": "@repo/shared",
+  "name": "@solarapp/shared",
   "version": "0.0.1",
   "private": true,
-  "exports": {
-    "./schemas/*": "./schemas/*.ts"
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@solarapp/eslint-config": "workspace:*",
+    "@solarapp/typescript-config": "workspace:*",
     "@types/node": "^22.13.10",
     "eslint": "^9.22.0",
     "typescript": "5.8.2"
