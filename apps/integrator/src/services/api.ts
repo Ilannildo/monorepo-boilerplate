@@ -1,5 +1,5 @@
 import axios from "axios";
-import { env } from "@/env.mjs";
+import { env } from "@/env.js";
 import { auth } from "@/server/auth";
 
 export const defaultAxiosConfig = {

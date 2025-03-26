@@ -4,3 +4,4 @@ export * from "./schemas/auth/sign-in-response.schema";
 export * from "./schemas/user/user-response.schema";
 export * from "./schemas/envs/main-service-env.schema";
 export * from "./common/http-response";
+export * from "./enum/role.enum";

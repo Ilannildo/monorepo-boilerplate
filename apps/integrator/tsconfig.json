@@ -1,15 +1,29 @@
 {
   "extends": "@solarapp/typescript-config/nextjs.json",
-  "compilerOptions": {    
+  "compilerOptions": {
+    "isolatedModules": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.js",
+    ".next/types/**/*.ts",
+    "src/env.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
