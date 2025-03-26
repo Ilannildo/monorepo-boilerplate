@@ -1,0 +1,5 @@
+const ROUNDS_OF_HASHING = 10;
+const JWT_EXPIRES_IN = "7d";
+const CORS_ALLOWED_ORIGINS = ['http://localhost:3000'];
+
+export { ROUNDS_OF_HASHING, CORS_ALLOWED_ORIGINS, JWT_EXPIRES_IN };

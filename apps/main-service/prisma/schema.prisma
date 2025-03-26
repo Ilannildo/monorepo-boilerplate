@@ -1,0 +1,35 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String        @id @default(cuid())
+  name              String        @db.VarChar(200)
+  email             String        @unique(map: "email")
+  phone             String?       @db.VarChar(32)
+  password          String?
+  status            GenericStatus @default(INACTIVE)
+  email_verified_at DateTime?
+  role              Role          @default(EMPLOYEE)
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+
+  @@index([email], type: Hash)
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+}
+
+enum GenericStatus {
+  ACTIVE
+  INACTIVE
+}

@@ -1,0 +1,35 @@
+services:  
+  database:
+    image: postgres
+    restart: always
+    container_name: 'postgres-${APP_NAME}'
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASS}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_HOST=${DATABASE_HOST}
+    ports:
+      - '${DATABASE_PORT}:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-solarapp
+  redis:
+    image: redis
+    container_name: 'redis-${APP_NAME}'
+    ports:
+      - '${REDIS_PORT}:6379'
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+
+networks:
+  app-solarapp:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis-data:
