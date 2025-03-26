@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const apiEnvSchema = z.object({
+export const MainServiceEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"], {
     errorMap: () => ({
       message: 'NODE_ENV deve ser "development", "test" ou "production".',
@@ -25,4 +25,7 @@ export const apiEnvSchema = z.object({
     })
     .nonempty(),
   APP_NAME: z.string().nonempty({ message: "APP_NAME não pode estar vazio." }),
+  JWT_SECRET_KEY: z.string().min(32, {
+    message: 'JWT_SECRET_KEY deve ter pelo menos 32 caracteres.',
+  }),
 });

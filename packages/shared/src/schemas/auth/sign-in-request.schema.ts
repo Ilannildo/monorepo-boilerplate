@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-export const SignUpRequestSchema = z.object({
-  name: z
-    .string({ required_error: "O nome é um campo obrigatório" })
-    .min(6, "O nome precisa ter no mínimo 6 letras.")
-    .describe("Nome do usuário"),
+export const SignInRequestSchema = z.object({
   email: z
     .string({ required_error: "O e-mail é um campo obrigatório" })
     .email("Informe um e-mail válido")
@@ -16,4 +12,4 @@ export const SignUpRequestSchema = z.object({
     .describe("Senha do usuário"),
 });
 
-export type ISignUpRequest = z.infer<typeof SignUpRequestSchema>;
+export type ISignInRequest = z.infer<typeof SignInRequestSchema>;
