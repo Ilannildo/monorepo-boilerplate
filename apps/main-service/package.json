@@ -88,6 +88,15 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^@infra/(.*)$": "<rootDir>/infra/$1",
+      "^@common/(.*)$": "<rootDir>/common/$1",
+      "^@http/(.*)$": "<rootDir>/http/$1",
+      "^@docs/(.*)$": "<rootDir>/docs/$1",
+      "^@utils/(.*)$": "<rootDir>/utils/$1",
+      "^@module/(.*)$": "<rootDir>/modules/$1"
+    }
   }
 }

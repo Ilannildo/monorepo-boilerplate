@@ -35,6 +35,9 @@
       "@infra/*": [
         "src/infra/*"
       ],
+      "@docs/*": [
+        "src/docs/*"
+      ],
       "@test/*": [
         "./test/*"
       ],

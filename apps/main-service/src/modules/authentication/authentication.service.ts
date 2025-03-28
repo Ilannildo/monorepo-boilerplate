@@ -5,7 +5,6 @@ import { errorMessage } from '@common/utils/error-messages';
 import { Codes } from '@common/utils/codes';
 import * as bcrypt from 'bcryptjs';
 import { GenericStatus } from '@prisma/client';
-import { IUser } from '@infra/models/user.model';
 import { SignInResponseDto } from './dto/response/sign-in-response.dto';
 import { JwtService } from '@nestjs/jwt';
 import { mapGetUserToResponse } from '@module/users/users.mapper';
