@@ -16,6 +16,7 @@ services:
       - app-solarapp
   redis:
     image: redis
+    restart: always
     container_name: 'redis-${APP_NAME}'
     ports:
       - '${REDIS_PORT}:6379'
