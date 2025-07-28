@@ -1,0 +1,15 @@
+{
+  "extends": "@solarapp/typescript-config/node.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2022"
+    ],
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": [
+    "src",
+    ".eslintrc.js"
+  ]
+}
