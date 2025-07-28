@@ -1,12 +1,10 @@
-import 'dotenv/config';
-
-import { MainServiceEnvSchema } from '@solarapp/shared';
+import { envSchema } from '@common/schemas/env.schema';
 import { z } from 'zod';
 
-let env: z.infer<typeof MainServiceEnvSchema>;
+let env: z.infer<typeof envSchema>;
 
 try {
-  env = MainServiceEnvSchema.parse(process.env);
+  env = envSchema.parse(process.env);
 } catch (error) {
   console.error('Configuração de ambiente inválida:');
   error.errors.forEach((err) => {
