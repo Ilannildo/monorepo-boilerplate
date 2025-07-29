@@ -1,9 +1,7 @@
-import { IUser } from '@infra/models/user.model';
+import { User } from '@solarapp/db';
 import { UserResponseDto } from './dto/response/user-response.dto';
 
-export function mapGetUserToResponse(
-  user?: IUser,
-): UserResponseDto | undefined {
+export function mapGetUserToResponse(user?: User): UserResponseDto | undefined {
   if (!user) return;
 
   return {
@@ -12,13 +10,11 @@ export function mapGetUserToResponse(
     name: user.name,
     role: user.role,
     updatedAt: user.updatedAt,
-    emailVerifiedAt: user.emailVerifiedAt,
-    phone: user.phone,
     createdAt: user.createdAt,
     status: user.status,
   };
 }
 
-export function mapListUsersToResponse(users: IUser[]): UserResponseDto[] {
+export function mapListUsersToResponse(users: User[]): UserResponseDto[] {
   return users.map((user) => mapGetUserToResponse(user));
 }

@@ -1,6 +1,6 @@
-import { IUser } from '@infra/models/user.model';
+import { User } from '@solarapp/db';
 import { Request } from 'express';
 
 export type AuthenticatedRequest = Request & {
-  user: IUser;
+  user: User;
 };

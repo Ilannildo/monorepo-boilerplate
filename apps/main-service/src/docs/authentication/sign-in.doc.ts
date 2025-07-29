@@ -21,7 +21,7 @@ export function SignInDocs() {
       description: 'Login incorreto',
       type: HttpExceptionDto,
       example: {        
-        code: HttpStatus.UNAUTHORIZED,
+        code: Codes.AUTH__UNEXPECTED_AUTHORIZATION,
         timestamp: new Date(),
         path: '/api/auth/sign-in',
         message: formatErrorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),

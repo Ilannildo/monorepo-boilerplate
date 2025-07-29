@@ -1,4 +1,3 @@
-import { Codes } from '@common/utils/codes';
 import {
   ArgumentsHost,
   Catch,
@@ -6,6 +5,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { Codes } from '@solarapp/shared';
 import { Response } from 'express';
 import { IncomingMessage } from 'http';
 import { ZodSerializationException } from 'nestjs-zod';

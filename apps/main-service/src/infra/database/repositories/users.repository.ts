@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { IUser } from '@infra/models/user.model';
-import { Prisma } from '@solarapp/db';
+import { Prisma, User } from '@solarapp/db';
 
 @Injectable()
 export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.UserCreateInput): Promise<IUser> {
+  async create(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.client.user.create({
       data,
     });
   }
 
-  update(id: string, data: Prisma.UserUpdateInput): Promise<IUser> {
+  update(id: string, data: Prisma.UserUpdateInput): Promise<User> {
     return this.prisma.client.user.update({
       where: {
         id,
@@ -24,17 +23,17 @@ export class UsersRepository {
 
   get(params: {
     where: Prisma.UserWhereInput;
-    // include?: Prisma.UserInclude;
-  }): Promise<IUser | null> {
-    const { where } = params;
+    include?: Prisma.UserInclude;
+  }): Promise<User> {
+    const { where, include } = params;
 
     return this.prisma.client.user.findFirst({
       where,
-      // include,
+      include,
     });
   }
 
-  delete(id: string): Promise<IUser> {
+  delete(id: string): Promise<User> {
     return this.prisma.client.user.delete({
       where: {
         id,
@@ -48,16 +47,16 @@ export class UsersRepository {
     cursor?: Prisma.UserWhereUniqueInput;
     where?: Prisma.UserWhereInput;
     orderBy?: Prisma.UserOrderByWithRelationInput;
-    // include?: Prisma.UserInclude;
-  }): Promise<IUser[]> {
-    const { cursor, orderBy, skip, take, where } = params;
+    include?: Prisma.UserInclude;
+  }): Promise<User[]> {
+    const { cursor, orderBy, skip, take, where, include } = params;
     return this.prisma.client.user.findMany({
       where,
       orderBy,
       cursor,
       skip,
       take,
-      // include,
+      include,
     });
   }
 
@@ -65,10 +64,10 @@ export class UsersRepository {
     page: number;
     limit: number;
     where?: Prisma.UserWhereInput;
-    // include?: Prisma.UserInclude;
+    include?: Prisma.UserInclude;
     orderBy?: Prisma.UserOrderByWithRelationInput;
-  }): Promise<[number, IUser[]]> {
-    const { page, limit, orderBy, where } = params;
+  }): Promise<[number, User[]]> {
+    const { page, limit, orderBy, where, include } = params;
 
     const skip = Math.abs(page - 1) * limit;
 
@@ -78,7 +77,7 @@ export class UsersRepository {
         orderBy,
       }),
       this.prisma.client.user.findMany({
-        // include,
+        include,
         where,
         orderBy,
         skip,

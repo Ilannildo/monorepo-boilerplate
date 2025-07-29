@@ -6,12 +6,15 @@ import { Codes, formatErrorMessage, UserStatus } from '@solarapp/shared';
 import * as bcrypt from 'bcryptjs';
 import { SignInRequestDto } from './dto/request/sign-in-request.dto';
 import { SignInResponseDto } from './dto/response/sign-in-response.dto';
+import { UserProfilesRepository } from '@infra/database/repositories/user-profiles.repository';
+import { UserSettingsRepository } from '@infra/database/repositories/user-settings.repository';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly jwtService: JwtService,
     private usersRepository: UsersRepository,
+    private userSettingsRepository: UserSettingsRepository,
   ) {}
 
   async signIn(signInDto: SignInRequestDto): Promise<SignInResponseDto> {
@@ -20,7 +23,7 @@ export class AuthenticationService {
     const lowercaseEmail = email.toLowerCase();
 
     const user = await this.usersRepository.get({
-      where: { email: { equals: lowercaseEmail, mode: 'insensitive' } },
+      where: { email: { equals: lowercaseEmail, mode: 'insensitive' } },      
     });
 
     if (!user) {
@@ -41,7 +44,11 @@ export class AuthenticationService {
       );
     }
 
-    if (!user.emailVerifiedAt) {
+    const userSettings = await this.userSettingsRepository.get({
+      where: { userId: user.id },      
+    });
+
+    if (!userSettings?.emailVerifiedAt) {
       // TODO: send confirmation email
       // await this.authenticationService.sendConfirmationAccountEmail(user);
 
