@@ -20,7 +20,7 @@ import { UserRoles } from '@common/decorators/user-role.decorator';
 @ApiTags('Usuários')
 @UseGuards(UserRoleGuard)
 @UseGuards(AuthGuard('jwt'))
-@Controller('/api/users')
+@Controller('/users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
