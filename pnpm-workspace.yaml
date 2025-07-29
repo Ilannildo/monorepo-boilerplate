@@ -1,6 +1,7 @@
 packages:
   - apps/*
   - packages/*
+
 onlyBuiltDependencies:
   - '@nestjs/core'
   - '@prisma/client'
@@ -9,6 +10,7 @@ onlyBuiltDependencies:
   - '@swc/core'
   - core-js-pure
   - esbuild
+  - msgpackr-extract
   - nestjs-pino
   - prisma
   - sharp
