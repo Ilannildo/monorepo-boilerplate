@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { userResponseSchema } from "../user/user-response.schema";
+import { UserSchema } from "../user/user.base.schema";
 
 export const SignInResponseSchema = z.object({
   accessToken: z
     .string({ message: "O token é um campo obrigatório" })
     .describe("Token de acesso"),
-  user: z.lazy(() => userResponseSchema).describe("Usuário autenticado"),
+  user: UserSchema.describe("Usuário autenticado"),
 });
 
 export type ISignInResponse = z.infer<typeof SignInResponseSchema>;
