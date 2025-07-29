@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Role } from "../../enums/role.enum";
+import { UserStatus } from "../../enums";
 
 export const UserSchema = z.object({
   id: z
@@ -21,6 +22,7 @@ export const UserSchema = z.object({
   updatedAt: z.date().describe("Data da última atualização do usuário"),
   createdAt: z.date().describe("Data de criação do usuário"),
   role: z.nativeEnum(Role).describe("Função atribuída ao usuário"),
+  status: z.nativeEnum(UserStatus).describe("Status do usuário"),
 });
 
 export type UserDto = z.infer<typeof UserSchema>;
