@@ -7,8 +7,8 @@ import { IUser } from '@infra/models/user.model';
 export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.UserCreateInput): Promise<IUser> {
-    return this.prisma.user.create({
+  async create(data: Prisma.UserCreateInput): Promise<IUser> {
+    return await this.prisma.user.create({
       data,
     });
   }

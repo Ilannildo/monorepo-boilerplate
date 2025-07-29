@@ -1,4 +1,4 @@
-import { GenericStatus, Role } from "@prisma/client";
+import { UserStatus, Role } from "@prisma/client";
 
 export class IUser {
   id: string;
@@ -6,9 +6,9 @@ export class IUser {
   email: string;  
   phone?: string;
   password?: string;  
-  status: GenericStatus;
-  email_verified_at?: Date;
+  status: UserStatus;
+  emailVerifiedAt?: Date;
   role: Role;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -7,10 +7,10 @@ export function mapListUsersToResponse(users: IUser[]): UserResponseDto[] {
     email: user.email,
     name: user.name,
     role: user.role,
-    updated_at: user.updated_at,
-    email_verified_at: user.email_verified_at,
+    updatedAt: user.updatedAt,
+    emailVerifiedAt: user.emailVerifiedAt,
     phone: user.phone,
-    created_at: user.created_at,
+    createdAt: user.createdAt,
   }));
 }
 
@@ -24,9 +24,9 @@ export function mapGetUserToResponse(
     email: user.email,
     name: user.name,
     role: user.role,
-    updated_at: user.updated_at,
-    email_verified_at: user.email_verified_at,
+    updatedAt: user.updatedAt,
+    emailVerifiedAt: user.emailVerifiedAt,
     phone: user.phone,
-    created_at: user.created_at,
+    createdAt: user.createdAt,
   };
 }

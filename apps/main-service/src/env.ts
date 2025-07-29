@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import { envSchema } from '@common/schemas/env.schema';
 import { z } from 'zod';
 

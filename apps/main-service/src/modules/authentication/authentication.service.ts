@@ -4,7 +4,7 @@ import { SignInRequestDto } from './dto/request/sign-in-request.dto';
 import { errorMessage } from '@common/utils/error-messages';
 import { Codes } from '@common/utils/codes';
 import * as bcrypt from 'bcryptjs';
-import { GenericStatus } from '@prisma/client';
+import { GenericStatus, UserStatus } from '@prisma/client';
 import { SignInResponseDto } from './dto/response/sign-in-response.dto';
 import { JwtService } from '@nestjs/jwt';
 import { mapGetUserToResponse } from '@module/users/users.mapper';
@@ -31,7 +31,7 @@ export class AuthenticationService {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    if (user.status === GenericStatus.INACTIVE) {
+    if (user.status === UserStatus.BLOCKED) {
       throw new HttpException(
         errorMessage(Codes.AUTH__USER_DISABLED),
         HttpStatus.UNAUTHORIZED,
@@ -41,7 +41,7 @@ export class AuthenticationService {
       );
     }
 
-    if (!user.email_verified_at) {
+    if (!user.emailVerifiedAt) {
       // TODO: send confirmation email
       // await this.authenticationService.sendConfirmationAccountEmail(user);
 
@@ -59,13 +59,13 @@ export class AuthenticationService {
       );
     }
 
-    const access_token = this.jwtService.sign({
+    const accessToken = this.jwtService.sign({
       id: user.id,
       role: user.role,
     });
 
     return {
-      access_token,
+      accessToken,
       user: mapGetUserToResponse(user)
     };
   }

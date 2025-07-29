@@ -1,4 +1,4 @@
-import { UserResponseSchema } from '@solarapp/shared';
+import { userResponseSchema } from '@solarapp/shared';
 import { createZodDto } from 'nestjs-zod';
 
-export class UserResponseDto extends createZodDto(UserResponseSchema) {}
+export class UserResponseDto extends createZodDto(userResponseSchema) {}

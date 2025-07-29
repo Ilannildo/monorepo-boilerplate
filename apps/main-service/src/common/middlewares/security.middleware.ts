@@ -12,10 +12,7 @@ import Redis from 'ioredis';
 export class SecurityMiddleware implements NestMiddleware {
   private readonly logger = new Logger(SecurityMiddleware.name);
 
-  private redis = new Redis({
-    host: 'localhost',
-    port: env.REDIS_PORT,
-  });
+  private redis = new Redis(env.REDIS_URL);
 
   private blockedKeyPrefix = 'blocked_ip:';
   private blockDuration = 7 * 24 * 60 * 60; // 7 dias (604800 segundos)

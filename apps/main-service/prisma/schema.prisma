@@ -9,24 +9,25 @@ datasource db {
 }
 
 model User {
-  id              String         @id @default(cuid())
-  name            String         @db.VarChar(200)
-  email           String         @unique(map: "email")
-  status          UserStatus     @default(CREATED)
-  role            Role           @default(EMPLOYEE)
-  documentType    DocumentType?
-  maritalStatus   MaritalStatus?
-  username        String?
-  document        String?        @db.VarChar(14)
-  phone           String?        @db.VarChar(32)
-  password        String?
-  profession      String?
-  nationality     String?
-  minCommission   Float?         @default(0)
-  maxCommission   Float?         @default(5)
-  emailVerifiedAt DateTime?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                  String                   @id @default(cuid())
+  name                String                   @db.VarChar(200)
+  email               String                   @unique(map: "email")
+  status              UserStatus               @default(CREATED)
+  role                Role                     @default(SELLER)
+  documentType        DocumentType?
+  maritalStatus       MaritalStatus?
+  configurationStatus UserConfigurationStatus? @default(INITIAL)
+  username            String?
+  document            String?                  @db.VarChar(14)
+  phone               String?                  @db.VarChar(32)
+  password            String?
+  profession          String?
+  nationality         String?
+  minCommission       Float?                   @default(0)
+  maxCommission       Float?                   @default(5)
+  emailVerifiedAt     DateTime?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
 
   @@index([email], type: Hash)
   @@map("users")
@@ -47,7 +48,20 @@ enum DocumentType {
 
 enum Role {
   ADMIN
-  EMPLOYEE
+  CONSULTANT
+  SELLER
+  TECHNICIAN
+  ENGINEER
+  FINANCIAL
+}
+
+enum UserConfigurationStatus {
+  INITIAL
+  GENERAL_DATA
+  EMPLOYEES
+  EXPENSES
+  PAYMENTS
+  COMPLETED
 }
 
 enum GenericStatus {
