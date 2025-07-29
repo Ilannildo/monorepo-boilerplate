@@ -3,13 +3,14 @@ import { Role } from "../../enums/role.enum";
 
 export const userResponseSchema = z.object({
   id: z
-    .string({ error: "O ID é um campo obrigatório" })
+    .string({ message: "O ID é um campo obrigatório" })
     .describe("Identificador único do usuário"),
   name: z
     .string()
     .describe("Nome do usuário")
     .min(1, "O nome é um campo obrigatório"),
   email: z
+    .string({ message: "O email é um campo obrigatório" })
     .email("Formato de e-mail inválido")
     .describe("Endereço de e-mail do usuário"),
   phone: z.string().optional().describe("Número de telefone do usuário"),
@@ -19,7 +20,7 @@ export const userResponseSchema = z.object({
     .describe("Data de verificação do e-mail"),
   updatedAt: z.date().describe("Data da última atualização do usuário"),
   createdAt: z.date().describe("Data de criação do usuário"),
-  role: z.enum(Role).describe("Função atribuída ao usuário"),
+  role: z.nativeEnum(Role).describe("Função atribuída ao usuário"),
 });
 
 export type IUserResponse = z.infer<typeof userResponseSchema>;
