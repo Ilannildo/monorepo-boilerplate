@@ -4,6 +4,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { mapGetUserToResponse } from './users.mapper';
 import { CreateUserDto } from './dto/request/create-user.dto';
@@ -29,13 +30,21 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+      throw new NotFoundException(
+        formatErrorMessage(Codes.AUTH__USER_NOT_FOUND),
+        {
+          cause: new Error(Codes.AUTH__USER_NOT_FOUND),
+        },
+      );
     }
 
     return mapGetUserToResponse(user);
   }
 
-  async create(data: CreateUserDto, companyId: string): Promise<UserResponseDto> {
+  async create(
+    data: CreateUserDto,
+    companyId: string,
+  ): Promise<UserResponseDto> {
     const { email, name, role, profile, settings, status } = data;
 
     const lowercaseEmail = email.toLowerCase();
