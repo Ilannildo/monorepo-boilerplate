@@ -132,12 +132,12 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.4.0
         version: 6.4.0(@nestjs/common@11.1.5(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.5)(reflect-metadata@0.2.2)
-      '@prisma/client':
-        specifier: ^6.5.0
-        version: 6.12.0(prisma@6.12.0(typescript@5.8.3))(typescript@5.8.3)
       '@scalar/nestjs-api-reference':
         specifier: ^0.4.2
         version: 0.4.16
+      '@solarapp/db':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@solarapp/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -171,9 +171,6 @@ importers:
       pino-pretty:
         specifier: ^13.0.0
         version: 13.0.0
-      prisma:
-        specifier: ^6.5.0
-        version: 6.12.0(typescript@5.8.3)
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
