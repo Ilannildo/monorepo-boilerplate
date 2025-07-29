@@ -32,7 +32,7 @@ export const authConfig: NextAuthConfig = {
           if (!response) return null;
 
           return {
-            id: response.access_token,
+            id: response.accessToken,
             ...response,
           };
         } catch (error: any) {
@@ -68,4 +68,4 @@ export const authConfig: NextAuthConfig = {
       return !!auth;
     },
   },
-};
+} satisfies NextAuthConfig;

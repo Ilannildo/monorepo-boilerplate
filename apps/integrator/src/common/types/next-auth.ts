@@ -1,7 +1,8 @@
-import { ISignInResponse } from "@solarapp/shared";
+import type { ISignInResponse } from "@solarapp/shared";
+import type { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
-  interface Session {
-    user: ISignInResponse;
+  interface Session extends DefaultSession {
+    user: ISignInResponse & DefaultSession["user"];
   }
 }

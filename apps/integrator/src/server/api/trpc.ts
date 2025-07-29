@@ -18,6 +18,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
   errorFormatter({ shape, error }) {
     let message = shape.message;
 
+    console.error('[error formatter]', message);
     if (error.cause && axios.isAxiosError(error.cause)) {
       const responseData = error.cause.response?.data;
       if (responseData?.message) {
