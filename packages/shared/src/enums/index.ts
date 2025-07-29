@@ -6,3 +6,5 @@ export * from "./document-type.enum";
 export * from "./generic-status.enum";
 export * from "./marital-status.enum";
 export * from "./user-configuration-status.enum";
+export * from "./log-action.enum";
+export * from "./log-entity.enum";
