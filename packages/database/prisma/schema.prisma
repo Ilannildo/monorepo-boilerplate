@@ -22,6 +22,7 @@ model User {
   company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   profile   UserProfile?
   settings  UserSettings?
+  logs      Log[]
 
   @@index([status])
   @@index([role])
@@ -80,6 +81,7 @@ model Company {
   updatedAt          DateTime        @updatedAt
   companyContact     CompanyContact?
   users              User[]
+  logs               Log[]
 
   @@index([document], type: Hash)
   @@map("companies")
@@ -101,6 +103,42 @@ model CompanyContact {
 
   @@index([companyId], type: Hash)
   @@map("company_contacts")
+}
+
+model Log {
+  id          String    @id @default(cuid())
+  description String?
+  entity      LogEntity
+  action      LogAction @default(GENERAL)
+  body        String?   @db.Text
+  ipAddress   String?
+  userId      String?
+  companyId   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company     Company?  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([companyId])
+  @@map("logs")
+}
+
+enum LogEntity {
+  USER
+  USER_PROFILE
+  USER_SETTING
+  COMPANY
+  COMPANY_CONTACT
+}
+
+enum LogAction {
+  GENERAL
+  LOGIN
+  REGISTER
+  CREATE
+  UPDATE
+  DELETE
 }
 
 enum CompanyType {
