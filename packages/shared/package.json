@@ -18,5 +18,22 @@
   },
   "dependencies": {
     "zod": "^4.0.10"
+  },
+  "exports": {
+    "./schemas": {
+      "import": "./dist/schemas/index.js",
+      "require": "./dist/schemas/index.js",
+      "types": "./dist/schemas/index.d.ts"
+    },
+    "./enums": {
+      "import": "./dist/enums/index.js",
+      "require": "./dist/enums/index.js",
+      "types": "./dist/enums/index.d.ts"
+    },
+    "./common": {
+      "import": "./dist/common/index.js",
+      "require": "./dist/common/index.js",
+      "types": "./dist/common/index.d.ts"
+    }
   }
 }

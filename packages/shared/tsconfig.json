@@ -5,8 +5,7 @@
       "ES2022"
     ],
     "module": "CommonJS",
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "outDir": "./dist"
   },
   "include": [
     "src",

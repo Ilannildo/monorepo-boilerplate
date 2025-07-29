@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { Role } from "../../enum/role.enum";
+import { Role } from "../../enums/role.enum";
 
-export const UserResponseSchema = z.object({
+export const userResponseSchema = z.object({
   id: z
     .string({ error: "O ID é um campo obrigatório" })
     .describe("Identificador único do usuário"),
@@ -10,7 +10,6 @@ export const UserResponseSchema = z.object({
     .describe("Nome do usuário")
     .min(1, "O nome é um campo obrigatório"),
   email: z
-    .string()
     .email("Formato de e-mail inválido")
     .describe("Endereço de e-mail do usuário"),
   phone: z.string().optional().describe("Número de telefone do usuário"),
@@ -23,4 +22,4 @@ export const UserResponseSchema = z.object({
   role: z.enum(Role).describe("Função atribuída ao usuário"),
 });
 
-export type IUserResponse = z.infer<typeof UserResponseSchema>;
+export type IUserResponse = z.infer<typeof userResponseSchema>;
