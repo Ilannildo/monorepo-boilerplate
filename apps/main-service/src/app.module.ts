@@ -1,16 +1,14 @@
 import { JsonBodyMiddleware } from '@common/middlewares/json-body.middleware';
 import { SecurityMiddleware } from '@common/middlewares/security.middleware';
 import { ZodValidationPipe } from '@common/pipes/zod-validation.pipe';
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { InfraModule } from './infra/infra.module';
+import { BullModule } from '@nestjs/bullmq';
+import { env } from './env';
 
 @Module({
   imports: [
@@ -21,6 +19,11 @@ import { InfraModule } from './infra/infra.module';
         limit: 100,
       },
     ]),
+    BullModule.forRoot({
+      connection: {
+        url: env.REDIS_URL,
+      },
+    }),
     InfraModule,
   ],
   controllers: [],

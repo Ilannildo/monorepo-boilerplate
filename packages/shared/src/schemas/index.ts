@@ -4,3 +4,4 @@ export * from "./auth/sign-in-response.schema";
 export * from "./user/user.base.schema";
 export * from "./user/user.create.schema";
 export * from "./common/pagination.schema";
+export * from "./send-mail/send-welcome-mail.schema";

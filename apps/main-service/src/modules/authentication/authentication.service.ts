@@ -1,3 +1,5 @@
+import { SendMailQueueProducer } from '@/services/send-mail/send-mail.producer.service';
+import { UserSettingsRepository } from '@infra/database/repositories/user-settings.repository';
 import { UsersRepository } from '@infra/database/repositories/users.repository';
 import { mapGetUserToResponse } from '@module/users/users.mapper';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -6,8 +8,6 @@ import { Codes, formatErrorMessage, UserStatus } from '@solarapp/shared';
 import * as bcrypt from 'bcryptjs';
 import { SignInRequestDto } from './dto/request/sign-in-request.dto';
 import { SignInResponseDto } from './dto/response/sign-in-response.dto';
-import { UserProfilesRepository } from '@infra/database/repositories/user-profiles.repository';
-import { UserSettingsRepository } from '@infra/database/repositories/user-settings.repository';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,6 +15,7 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
     private usersRepository: UsersRepository,
     private userSettingsRepository: UserSettingsRepository,
+    private sendMailQueueProducer: SendMailQueueProducer,
   ) {}
 
   async signIn(signInDto: SignInRequestDto): Promise<SignInResponseDto> {
@@ -23,7 +24,13 @@ export class AuthenticationService {
     const lowercaseEmail = email.toLowerCase();
 
     const user = await this.usersRepository.get({
-      where: { email: { equals: lowercaseEmail, mode: 'insensitive' } },      
+      where: { email: { equals: lowercaseEmail, mode: 'insensitive' } },
+    });
+
+    await this.sendMailQueueProducer.welcome({
+      email,
+      name: 'Ilannildo Viana',
+      userId: '123',
     });
 
     if (!user) {
@@ -45,7 +52,7 @@ export class AuthenticationService {
     }
 
     const userSettings = await this.userSettingsRepository.get({
-      where: { userId: user.id },      
+      where: { userId: user.id },
     });
 
     if (!userSettings?.emailVerifiedAt) {

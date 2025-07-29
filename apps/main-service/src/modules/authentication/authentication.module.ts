@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { env } from '@/env';
 import { JwtStrategy } from '@infra/strategies/jwt.strategy';
 import { JWT_EXPIRES_IN } from '@common/config/app';
+import { SendMailProducerModule } from '@/services/send-mail/send-mail-producer.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { JWT_EXPIRES_IN } from '@common/config/app';
         expiresIn: JWT_EXPIRES_IN,
       },
     }),
+    SendMailProducerModule
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService, JwtStrategy],
