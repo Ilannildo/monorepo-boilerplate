@@ -2,7 +2,12 @@ import { Codes } from '@common/utils/codes';
 import { errorMessage } from '@common/utils/error-messages';
 import { UsersRepository } from '@infra/database/repositories/users.repository';
 import { mapGetUserToResponse } from '@module/users/users.mapper';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { SignInRequestDto } from './dto/request/sign-in-request.dto';
@@ -26,36 +31,39 @@ export class AuthenticationService {
     });
 
     if (!user) {
-      throw new HttpException(
+      throw new UnauthorizedException(
         errorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
-    if (user.status === UserStatus.BLOCKED) {
-      throw new HttpException(
-        errorMessage(Codes.AUTH__USER_DISABLED),
-        HttpStatus.UNAUTHORIZED,
         {
-          cause: new Error(Codes.AUTH__USER_DISABLED),
+          cause: new Error(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
         },
       );
+    }
+
+    if (user.status === UserStatus.BLOCKED) {
+      throw new UnauthorizedException(errorMessage(Codes.AUTH__USER_DISABLED), {
+        cause: new Error(Codes.AUTH__USER_DISABLED),
+      });
     }
 
     if (!user.emailVerifiedAt) {
       // TODO: send confirmation email
       // await this.authenticationService.sendConfirmationAccountEmail(user);
 
-      throw new HttpException(
+      throw new UnauthorizedException(
         errorMessage(Codes.AUTH__USER_NOT_ACTIVATED),
-        HttpStatus.UNAUTHORIZED,
+        {
+          cause: new Error(Codes.AUTH__USER_NOT_ACTIVATED),
+        },
       );
     }
 
     const passwordMatch = await bcrypt.compare(password, user?.password);
     if (!passwordMatch) {
-      throw new HttpException(
+      throw new UnauthorizedException(
         errorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
-        HttpStatus.UNAUTHORIZED,
+        {
+          cause: new Error(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
+        },
       );
     }
 
@@ -66,7 +74,7 @@ export class AuthenticationService {
 
     return {
       accessToken,
-      user: mapGetUserToResponse(user)
+      user: mapGetUserToResponse(user),
     };
   }
 }

@@ -1,7 +1,7 @@
+import { Codes } from '@common/utils/codes';
 import {
   ArgumentsHost,
   Catch,
-  ExceptionFilter,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
@@ -9,7 +9,6 @@ import { BaseExceptionFilter } from '@nestjs/core';
 import { Response } from 'express';
 import { IncomingMessage } from 'http';
 import { ZodSerializationException } from 'nestjs-zod';
-import { ZodError } from 'zod';
 
 export interface HttpExceptionResponse {
   statusCode: number;
@@ -27,12 +26,11 @@ export const getErrorCode = (exception: unknown): string => {
   const exceptionError =
     exception instanceof HttpException ? (exception.cause as any) : undefined;
 
-  return exceptionError?.message ?? 'auth/internal-error';
+  return exceptionError?.message ?? Codes.AUTH__INTERNAL_ERROR;
 };
 
 export const getErrorMessage = (exception: unknown): any => {
   if (exception instanceof HttpException) {
-    console.log("http exception")
     const errorResponse = exception.getResponse();
     let errorMessage =
       (errorResponse as HttpExceptionResponse).message || exception.message;
@@ -45,7 +43,6 @@ export const getErrorMessage = (exception: unknown): any => {
   }
 
   if (exception instanceof ZodSerializationException) {
-    console.log("zod exception")
     const zodError = exception.getZodError();
     const error = zodError.errors.length > 0 ? zodError.errors[0] : undefined;
 
@@ -63,15 +60,13 @@ export class HttpExceptionFilter extends BaseExceptionFilter {
     const request = ctx.getRequest<IncomingMessage>();
     const status = getStatusCode(exception);
     const message = getErrorMessage(exception);
-    const errorCode = getErrorCode(exception);
+    const code = getErrorCode(exception);
 
     response.status(status).json({
-      success: false,
-      code: status,
       timestamp: new Date().toISOString(),
       path: request.url,
       message,
-      error: errorCode,
+      code,
     });
   }
 }

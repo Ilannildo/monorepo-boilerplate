@@ -15,14 +15,13 @@ export function SignInDocs() {
     ApiResponse({
       status: HttpStatus.OK,
       description: 'Login bem-sucedido.',
-      type: SignInResponseDto,
+      type: SignInResponseDto,      
     }),
     ApiResponse({
       status: HttpStatus.UNAUTHORIZED,
       description: 'Login incorreto',
       type: HttpExceptionDto,
-      example: {
-        status: false,
+      example: {        
         code: HttpStatus.UNAUTHORIZED,
         timestamp: new Date(),
         path: '/api/auth/sign-in',
