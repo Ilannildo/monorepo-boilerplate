@@ -49,7 +49,6 @@ enum DocumentType {
 
 enum Role {
   ADMIN
-  ADMINISTRATOR
   CONSULTANT
   SELLER
   TECHNICIAN
