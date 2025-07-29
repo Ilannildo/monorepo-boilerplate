@@ -1,18 +1,16 @@
+import { JsonBodyMiddleware } from '@common/middlewares/json-body.middleware';
+import { SecurityMiddleware } from '@common/middlewares/security.middleware';
+import { ZodValidationPipe } from '@common/pipes/zod-validation.pipe';
 import {
-  BadRequestException,
   MiddlewareConsumer,
   Module,
-  NestModule,
-  ValidationPipe,
+  NestModule
 } from '@nestjs/common';
-import { InfraModule } from './infra/infra.module';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { SecurityMiddleware } from '@common/middlewares/security.middleware';
-import { JsonBodyMiddleware } from '@common/middlewares/json-body.middleware';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
-import { ZodValidationPipe } from '@common/pipes/zod-validation.pipe';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { InfraModule } from './infra/infra.module';
 
 @Module({
   imports: [

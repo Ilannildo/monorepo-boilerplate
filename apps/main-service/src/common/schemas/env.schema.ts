@@ -4,11 +4,6 @@ export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production'], {
     message: 'NODE_ENV deve ser "development", "test" ou "production".',
   }),
-  DATABASE_URL: z
-    .string({
-      message: 'DATABASE_URL é obrigatória',
-    })
-    .nonempty(),
   APP_VERSION: z
     .string()
     .nonempty({ message: 'APP_VERSION não pode estar vazio.' }),

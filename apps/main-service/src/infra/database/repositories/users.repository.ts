@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
 import { IUser } from '@infra/models/user.model';
+import { Prisma } from '@solarapp/db';
 
 @Injectable()
 export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Prisma.UserCreateInput): Promise<IUser> {
-    return await this.prisma.user.create({
+    return await this.prisma.client.user.create({
       data,
     });
   }
 
   update(id: string, data: Prisma.UserUpdateInput): Promise<IUser> {
-    return this.prisma.user.update({
+    return this.prisma.client.user.update({
       where: {
         id,
       },
@@ -25,17 +25,17 @@ export class UsersRepository {
   get(params: {
     where: Prisma.UserWhereInput;
     // include?: Prisma.UserInclude;
-  }): Promise<IUser> {
+  }): Promise<IUser | null> {
     const { where } = params;
 
-    return this.prisma.user.findFirst({
+    return this.prisma.client.user.findFirst({
       where,
       // include,
     });
   }
 
   delete(id: string): Promise<IUser> {
-    return this.prisma.user.delete({
+    return this.prisma.client.user.delete({
       where: {
         id,
       },
@@ -51,7 +51,7 @@ export class UsersRepository {
     // include?: Prisma.UserInclude;
   }): Promise<IUser[]> {
     const { cursor, orderBy, skip, take, where } = params;
-    return this.prisma.user.findMany({
+    return this.prisma.client.user.findMany({
       where,
       orderBy,
       cursor,
@@ -72,12 +72,12 @@ export class UsersRepository {
 
     const skip = Math.abs(page - 1) * limit;
 
-    return this.prisma.$transaction([
-      this.prisma.user.count({
+    return this.prisma.client.$transaction([
+      this.prisma.client.user.count({
         where,
         orderBy,
       }),
-      this.prisma.user.findMany({
+      this.prisma.client.user.findMany({
         // include,
         where,
         orderBy,

@@ -7,7 +7,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '@prisma/client';
+import { Role } from '@solarapp/shared';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {

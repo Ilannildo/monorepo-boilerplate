@@ -1,4 +1,4 @@
-import { UserStatus, Role } from "@prisma/client";
+import { Role, UserStatus } from "@solarapp/shared";
 
 export class IUser {
   id: string;

@@ -1,13 +1,13 @@
-import { UsersRepository } from '@infra/database/repositories/users.repository';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { SignInRequestDto } from './dto/request/sign-in-request.dto';
-import { errorMessage } from '@common/utils/error-messages';
 import { Codes } from '@common/utils/codes';
-import * as bcrypt from 'bcryptjs';
-import { GenericStatus, UserStatus } from '@prisma/client';
-import { SignInResponseDto } from './dto/response/sign-in-response.dto';
-import { JwtService } from '@nestjs/jwt';
+import { errorMessage } from '@common/utils/error-messages';
+import { UsersRepository } from '@infra/database/repositories/users.repository';
 import { mapGetUserToResponse } from '@module/users/users.mapper';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcryptjs';
+import { SignInRequestDto } from './dto/request/sign-in-request.dto';
+import { SignInResponseDto } from './dto/response/sign-in-response.dto';
+import { UserStatus } from '@solarapp/shared';
 
 @Injectable()
 export class AuthenticationService {

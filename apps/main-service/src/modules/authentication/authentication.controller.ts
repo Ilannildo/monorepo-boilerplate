@@ -8,7 +8,7 @@ import { SignInResponseDto } from './dto/response/sign-in-response.dto';
 import { SignInDocs } from '@docs/authentication/sign-in.doc';
 
 @ApiTags('Autenticação')
-@Controller('/api/auth')
+@Controller('/auth')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 

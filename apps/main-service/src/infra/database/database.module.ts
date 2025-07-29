@@ -6,10 +6,7 @@ const repositories = [UsersRepository];
 
 @Global()
 @Module({
-  providers: [
-    { provide: PrismaService, useValue: PrismaService.getInstance() },
-    ...repositories,
-  ],
+  providers: [PrismaService, ...repositories],
   exports: [PrismaService, ...repositories],
 })
 export class DatabaseModule {}
