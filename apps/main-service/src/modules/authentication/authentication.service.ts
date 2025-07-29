@@ -1,18 +1,11 @@
-import { Codes } from '@common/utils/codes';
-import { errorMessage } from '@common/utils/error-messages';
 import { UsersRepository } from '@infra/database/repositories/users.repository';
 import { mapGetUserToResponse } from '@module/users/users.mapper';
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Codes, formatErrorMessage, UserStatus } from '@solarapp/shared';
 import * as bcrypt from 'bcryptjs';
 import { SignInRequestDto } from './dto/request/sign-in-request.dto';
 import { SignInResponseDto } from './dto/response/sign-in-response.dto';
-import { UserStatus } from '@solarapp/shared';
 
 @Injectable()
 export class AuthenticationService {
@@ -32,7 +25,7 @@ export class AuthenticationService {
 
     if (!user) {
       throw new UnauthorizedException(
-        errorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
+        formatErrorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
         {
           cause: new Error(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
         },
@@ -40,9 +33,12 @@ export class AuthenticationService {
     }
 
     if (user.status === UserStatus.BLOCKED) {
-      throw new UnauthorizedException(errorMessage(Codes.AUTH__USER_DISABLED), {
-        cause: new Error(Codes.AUTH__USER_DISABLED),
-      });
+      throw new UnauthorizedException(
+        formatErrorMessage(Codes.AUTH__USER_DISABLED),
+        {
+          cause: new Error(Codes.AUTH__USER_DISABLED),
+        },
+      );
     }
 
     if (!user.emailVerifiedAt) {
@@ -50,7 +46,7 @@ export class AuthenticationService {
       // await this.authenticationService.sendConfirmationAccountEmail(user);
 
       throw new UnauthorizedException(
-        errorMessage(Codes.AUTH__USER_NOT_ACTIVATED),
+        formatErrorMessage(Codes.AUTH__USER_NOT_ACTIVATED),
         {
           cause: new Error(Codes.AUTH__USER_NOT_ACTIVATED),
         },
@@ -60,7 +56,7 @@ export class AuthenticationService {
     const passwordMatch = await bcrypt.compare(password, user?.password);
     if (!passwordMatch) {
       throw new UnauthorizedException(
-        errorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
+        formatErrorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
         {
           cause: new Error(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
         },

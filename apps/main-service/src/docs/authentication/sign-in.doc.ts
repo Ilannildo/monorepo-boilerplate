@@ -2,9 +2,8 @@ import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { HttpStatus } from '@nestjs/common';
 import { HttpExceptionDto } from '@common/types/http-exception';
-import { errorMessage } from '@common/utils/error-messages';
-import { Codes } from '@common/utils/codes';
 import { SignInResponseDto } from '@module/authentication/dto/response/sign-in-response.dto';
+import { Codes, formatErrorMessage } from '@solarapp/shared';
 
 export function SignInDocs() {
   return applyDecorators(
@@ -25,7 +24,7 @@ export function SignInDocs() {
         code: HttpStatus.UNAUTHORIZED,
         timestamp: new Date(),
         path: '/api/auth/sign-in',
-        message: errorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
+        message: formatErrorMessage(Codes.AUTH__UNEXPECTED_AUTHORIZATION),
       },
     }),
   );

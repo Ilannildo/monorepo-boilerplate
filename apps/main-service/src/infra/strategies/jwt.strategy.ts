@@ -1,9 +1,11 @@
 import { env } from '@/env';
-import { Codes } from '@common/utils/codes';
-import { errorMessage } from '@common/utils/error-messages';
 import { UsersRepository } from '@infra/database/repositories/users.repository';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException
+} from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { Codes, formatErrorMessage } from '@solarapp/shared';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
@@ -24,9 +26,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
 
     if (!user) {
-      throw new HttpException(
-        errorMessage(Codes.AUTH__USER_NOT_AUTHORIZED),
-        HttpStatus.UNAUTHORIZED,
+      throw new UnauthorizedException(
+        formatErrorMessage(Codes.AUTH__USER_NOT_AUTHORIZED),
         {
           cause: Codes.AUTH__USER_NOT_AUTHORIZED,
         },
